@@ -11,7 +11,7 @@ public class SafePacker {
 //    int k = 4; //грузоподъёмность рюкзака safeWeights
 //    int n = 3; //число строк = число вещей numberOfThings = things.length
 
-    public static Safe[][] pack(int safeWeights, Thing[] things, Safe[][] safes){
+    public static Safe[][] pack(int safeWeights, Thing[] things, Safe[][] coordinate){
 
         // Перебераем все предметы
         for (int i = 0; i < things.length + 1; i++) {
@@ -19,50 +19,53 @@ public class SafePacker {
             // Перебераем все варианты веса, которые поддерживает Сейф
             for (int j = 0; j < safeWeights + 1; j++) {
 
-
                 if (i == 0 || j == 0) { //нулевую строку и столбец заполняем нулями
-                    safes[i][j] = new Safe(new Thing[]{}, 0);
+                    coordinate[i][j] = getEmptySafe();
                 } else
                     if (i == 1) {
-
                     /*первая строка заполняется просто: первый предмет кладём или не кладём в зависимости от веса.*/
-                    safes[1][j] =
-
-                            things[0].getWeight() <= j //Помещается ли предмет в текущий (j) вариант веса сейфа
-                            ? new Safe(new Thing[]{things[0]}, things[0].getPrice())
-                            : new Safe(new Thing[]{}, 0);
+                    coordinate[1][j] = getSafe(things, j);
 
                 } else {
                     if (things[i - 1].getWeight() > j) //если очередной предмет не влезает в сейф,
-                        safes[i][j] = safes[i - 1][j];    //записываем предыдущий максимум
+                        coordinate[i][j] = coordinate[i - 1][j];    //записываем предыдущий максимум
                     else {
                         /*рассчитаем цену очередного предмета + максимальную цену для (максимально возможный для рюкзака вес − вес предмета)*/
-                        int newPrice = things[i - 1].getPrice() + safes[i - 1][j - things[i - 1].getWeight()].getPrice();
-                        if (safes[i - 1][j].getPrice() > newPrice) //если предыдущий максимум больше
-                            safes[i][j] = safes[i - 1][j]; //запишем его
+                        int newPrice = things[i - 1].getPrice() + coordinate[i - 1][j - things[i - 1].getWeight()].getPrice();
+                        if (coordinate[i - 1][j].getPrice() > newPrice) //если предыдущий максимум больше
+                            coordinate[i][j] = coordinate[i - 1][j]; //запишем его
                         else {
                             /*иначе фиксируем новый максимум: текущий предмет + стоимость свободного пространства*/
-                            safes[i][j] = new Safe(Stream.concat(Arrays.stream(new Thing[]{things[i - 1]}),
-                                    Arrays.stream(safes[i - 1][j - things[i - 1].getWeight()].getItems())).toArray(Thing[]::new), newPrice);
+                            coordinate[i][j] = new Safe(Stream.concat(Arrays.stream(new Thing[]{things[i - 1]}),
+                                    Arrays.stream(coordinate[i - 1][j - things[i - 1].getWeight()].getItems())).toArray(Thing[]::new), newPrice);
                         }
                     }
                 }
 
-
             }
             
         }
-        return safes;
+        return coordinate;
     }
 
-    public static Safe[][] printVariants(int numberOfThings, int safeWeights, Safe[][] bp){
+    private static Safe getEmptySafe() {
+        return new Safe(new Thing[]{}, 0);
+    }
+
+    private static Safe getSafe(Thing[] things, int j) {
+        return things[0].getWeight() <= j //Помещается ли предмет в текущий (j) вариант веса сейфа
+                ? new Safe(new Thing[]{things[0]}, things[0].getPrice())
+                : new Safe(new Thing[]{}, 0);
+    }
+
+    public static Safe[][] printVariants(int numberOfThings, int safeWeights, Safe[][] coordinate){
         for (int i = 1; i < numberOfThings + 1; i++) {
             for (int j = 1; j < safeWeights + 1; j++) {
-                System.out.print(bp[i][j].getDescription() + " ");
+                System.out.print(coordinate[i][j].getDescription() + " ");
             }
             System.out.print("\n");
         }
-        return bp;
+        return coordinate;
     }
 
     public static void findThingsForBackpack(Safe[][] variantsTable){
