@@ -1,4 +1,4 @@
-package by.mikhalevich.backpack;
+package by.mikhalevich.safe;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -7,9 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SafePacker {
-
-//    int k = 4; //грузоподъёмность рюкзака safeWeights
-//    int n = 3; //число строк = число вещей numberOfThings = things.length
 
     public static Safe[][] pack(int safeWeights, Thing[] things, Safe[][] coordinate){
 
@@ -68,8 +65,10 @@ public class SafePacker {
         return coordinate;
     }
 
-    public static void findThingsForBackpack(Safe[][] variantsTable){
-        List<Safe> lastColumn = Arrays.stream(variantsTable).map(row -> row[row.length - 1]).collect(Collectors.toList());
+    public static void findThingsForSafe(Safe[][] variantsTable){
+        List<Safe> lastColumn = Arrays.stream(variantsTable)
+                .map(row -> row[row.length - 1])
+                .collect(Collectors.toList());
         Safe variantsTableWithMax = lastColumn.stream().max(Comparator.comparing(Safe::getPrice)).orElse(new Safe(null, 0));
         System.out.println(variantsTableWithMax.getDescription());
     }

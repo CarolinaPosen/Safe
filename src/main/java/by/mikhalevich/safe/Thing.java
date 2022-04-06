@@ -1,0 +1,34 @@
+package by.mikhalevich.safe;
+
+public class Thing {
+    private final String name; //название вещи
+    private final int weight; //вес
+    private final int price; //стоимость
+
+    public Thing(String name, int weight, int price) {
+        this.name = name;
+        this.weight = weight;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Thing{" +
+                "name='" + name + '\'' +
+                ", weight=" + weight +
+                ", price=" + price +
+                '}';
+    }
+}

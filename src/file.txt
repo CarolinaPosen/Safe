@@ -1,6 +1,6 @@
-safe 5
-thing телефон 1 1500
-thing компьютер 4 3000
-thing квадрокоптер 3 2000
-thing телефон 1 1500
-thing телефон 1 1500
+safe 13
+thing w1 3 1
+thing w2 4 6
+thing w3 5 4
+thing w4 8 7
+thing w5 9 6

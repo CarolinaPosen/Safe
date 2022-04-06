@@ -1,4 +1,4 @@
-package by.mikhalevich.backpack;
+package by.mikhalevich.safe;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

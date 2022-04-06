@@ -1,32 +1,22 @@
 package by.mikhalevich.stream;
 
-import by.mikhalevich.backpack.Thing;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public class SafeHandler {
+    private int index;
+    private Safe safe;
 
-    private Thing[] things;
-    private Integer price;
-
-
-    public SafeHandler(Thing[] things, int price) {
-        this.things = things;
-        this.price = price;
+    public int getIndex() {
+        return index;
     }
 
-    public Thing[] getItems() {
-        return things;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
-    public int getPrice() {
-        return price;
+    public Safe getSafe() {
+        return safe;
     }
 
-    //Описание состояния рюкзака
-    public String getDescription() {
-        return things == null ? "" : Arrays.stream(things).map(Thing::getName).collect(Collectors.joining("+")) + "-" + getPrice();
+    public void setSafe(Safe safe) {
+        this.safe = safe;
     }
-
 }

@@ -1,4 +1,4 @@
-package by.mikhalevich.backpack;
+package by.mikhalevich.stream;
 
 public class Thing {
     private final String name; //название вещи

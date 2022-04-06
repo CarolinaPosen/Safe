@@ -1,11 +1,6 @@
-package by.mikhalevich.backpack;
-
-import by.mikhalevich.stream.SafeHandler;
-import by.mikhalevich.stream.SafePackerStream;
+package by.mikhalevich.safe;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Runner {
     public static void main(String[] args) throws IOException {
@@ -33,7 +28,7 @@ public class Runner {
 
 
         SafePacker.printVariants(thingsArray.length, safeSize, safeVariantsTable);
-        SafePacker.findThingsForBackpack(safeVariantsTable);
+        SafePacker.findThingsForSafe(safeVariantsTable);
 
 //        List<SafeHandler> safeHandlers = SafePackerStream.pack(things);
 //        SafePackerStream.print(safeHandlers);
