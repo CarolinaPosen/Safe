@@ -10,7 +10,7 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) throws IOException {
 
-//        int safeWeights = 4; //объем сейфа
+//        int safeSize = 4; //объем сейфа
 //        int thingCount = 3; //число строк = число вещей
 
 //массив вещей
@@ -20,21 +20,20 @@ public class Runner {
 //                new Thing("квадрокоптер", 3, 2000)};
 
 
-        Integer safeWeights = Reader.readSafeSize("src/file.txt");
-        List<Thing> thingsList =  Reader.readThingsList("src/file.txt");
+        Reader reader = new Reader("src/file.txt");
+        Integer safeSize = reader.getSafeSize();
+        Thing [] thingsArray =  reader.getThingsList();
 
-        Thing[] thingsArray = new Thing[thingsList.size()];
 
-        for (int i = 0; i < thingsList.size(); i++) {
-            thingsArray[i] = thingsList.get(i);
-        }
 
 //массив промежуточных состояний рюкзака
-        Safe[][] safe = new Safe[thingsArray.length + 1][safeWeights + 1];
+        Safe[][] safeCoordinates = new Safe[thingsArray.length + 1][safeSize + 1];
 
-        Safe[][] variantsTable = SafePacker.pack(safeWeights, thingsArray, safe);
-        SafePacker.printVariants(thingsArray.length, safeWeights, variantsTable);
-        SafePacker.findThingsForBackpack(variantsTable);
+        Safe[][] safeVariantsTable = SafePacker.pack(safeSize, thingsArray, safeCoordinates);
+
+
+        SafePacker.printVariants(thingsArray.length, safeSize, safeVariantsTable);
+        SafePacker.findThingsForBackpack(safeVariantsTable);
 
 //        List<SafeHandler> safeHandlers = SafePackerStream.pack(things);
 //        SafePackerStream.print(safeHandlers);
